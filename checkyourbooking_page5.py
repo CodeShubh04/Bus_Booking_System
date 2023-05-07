@@ -1,0 +1,43 @@
+from tkinter import *
+import sqlite3
+con=sqlite3.connect("Shubhanshi's DB")
+cur=con.cursor()
+root=Tk()
+h,w=root.winfo_screenheight(),root.winfo_screenwidth()
+root.geometry('%dx%d+0+0'%(w,h))
+bus=PhotoImage(file='.\\Bus_for_project.png')
+Label(root,image=bus).grid(row=0,column=0,columnspan=10,padx=w//3)
+Label(root,text='Online Bus Booking System',bg='light blue',fg='red',font='Arial 14 bold').grid(row=1,column=0,columnspan=10)
+Label(root,text='Check Your Booking',bg='light green',fg='green',font='Arial 11 bold').grid(row=2,column=0,columnspan=10,pady=20)
+Label(root,text='Enter your mobile number',font='Arial 11').grid(row=3,column=4)
+Entry(root).grid(row=3,column=5)
+fr=Frame(root,relief='groove',bd=3)
+fr.grid(row=4,column=0,columnspan=50,padx=(w/15,0))
+def fun():
+    conn=sqlite3.connect("Shubhanshi's DB")
+    cur=conn.cursor()
+    cur.execute("""insert into passenger values("{}","{}","{}","{}","{}")""".format(name.get(),gender.get(),int(no_of_seats.get()),int(mobile_no.get()),int(age.get())))
+    con.commit()
+    con.close()
+    Label(fr,text='Passengers:',font='Arial 11').grid(row=4,column=1)
+    Label(fr,text='No. of seats:',font='Arial 11').grid(row=5,column=1)
+    Label(fr,text='Age:',font='Arial 11').grid(row=6,column=1)
+    Label(fr,text='Book Ref.:',font='Arial 11').grid(row=7,column=1)
+    Label(fr,text='Travel on:',font='Arial 11').grid(row=8,column=1)
+    Label(fr,text='No of seats:',font='Arial 11').grid(row=9,column=1)
+    Label(fr,text='Gender:',font='Arial 11').grid(row=4,column=5)
+    Label(fr,text='Phone:',font='Arial 11').grid(row=5,column=5)
+    Label(fr,text='Fare Rs.:',font='Arial 11').grid(row=6,column=5)
+    Label(fr,text='Bus Detail:',font='Arial 11').grid(row=7,column=5)
+    Label(fr,text='Booked On:',font='Arial 11').grid(row=8,column=5)
+    Label(fr,text='Boarding Point:',font='Arial 11').grid(row=9,column=5)
+    Label(fr,text='*Total amount Rs. to be paid at the time of boarding the bus',font='Arial 11').grid(row=10,column=0,columnspan=7)
+Button(root,text='Check Booking',command=fun).grid(row=3,column=6)
+def fun3():
+    root.destroy()
+    import seatbook_check_book_page2
+root.bind('<KeyPress>',fun3 )
+home=PhotoImage(file='.\\home.png')
+Button(root,image=home,command=fun3).grid(row=4,column=8)
+
+
